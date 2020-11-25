@@ -2,9 +2,30 @@
 package org.dis;
 //imports ...
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 public class EscribeJSON {
 
     public static void main(String[] args) {
+
+        LeeCSV lector = new LeeCSV();
+
+        List<golfPlayer> golfPlayerList = lector.parseaCSV("best-golf-players.csv");
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+        try {
+            FileWriter fileWriter = new FileWriter("best-golf-players.json");
+            gson.toJson(golfPlayerList, fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
  }
